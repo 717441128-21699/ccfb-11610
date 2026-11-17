@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>定制拼图生成器 · 激光切割</title>
+    <link rel="stylesheet" href="/style.css" />
+  </head>
+  <body>
+    <aside id="panel">
+      <h1>定制拼图生成器</h1>
+
+      <section>
+        <h2>照片</h2>
+        <label class="file">
+          <input type="file" id="fileInput" accept="image/*" />
+          <span>上传顾客照片</span>
+        </label>
+        <canvas id="faceCanvas" width="260" height="200"></canvas>
+        <div class="row">
+          <button id="btnDetectFaces" class="small">重新检测人脸</button>
+          <span class="hint">拖框添加 / 点击删除</span>
+        </div>
+      </section>
+
+      <section>
+        <h2>拼图参数</h2>
+        <div class="grid">
+          <label>块数 <input id="pieceCount" type="number" value="500" min="20" max="1500" step="10" /></label>
+          <label>板宽 mm <input id="boardWidth" type="number" value="500" min="100" max="2000" step="10" /></label>
+          <label>最小圆角 mm <input id="minRadius" type="number" value="1.0" min="0.3" max="5" step="0.1" /></label>
+          <label>异形块 <input id="specialCount" type="number" value="4" min="0" max="20" step="1" /></label>
+          <label>随机种子 <input id="seed" type="number" value="20261118" step="1" /></label>
+          <label>板厚 mm <input id="thickness" type="number" value="3" min="1" max="10" step="0.5" /></label>
+        </div>
+        <button id="btnGenerate">生成拼图</button>
+        <div id="warnings"></div>
+      </section>
+
+      <section>
+        <h2>激光切割</h2>
+        <div class="row">
+          <button id="btnSvg" class="small">导出 SVG</button>
+          <button id="btnDxf" class="small">导出 DXF</button>
+        </div>
+        <div id="laserStats" class="stats"></div>
+      </section>
+
+      <section>
+        <h2>三维预览</h2>
+        <div class="row">
+          <button id="btnScatter" class="small">打散</button>
+          <button id="btnAssemble" class="small">一键拼好</button>
+        </div>
+        <label class="check"><input id="showRef" type="checkbox" /> 显示参考图</label>
+        <label class="range">爆炸视图 <input id="explode" type="range" min="0" max="1" step="0.01" value="0" /></label>
+        <div id="progress" class="stats"></div>
+        <p class="hint">拖动旋转视角 · 滚轮缩放 · 右键平移<br />拖动碎块移动 · Q/E 旋转手中块 · 靠近正确位置自动吸附</p>
+      </section>
+    </aside>
+
+    <main>
+      <canvas id="glCanvas"></canvas>
+      <div id="genStats" class="overlay"></div>
+    </main>
+
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
